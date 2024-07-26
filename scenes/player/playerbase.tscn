@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://c301o0oxobrrh"]
+
+[ext_resource type="Script" path="res://scenes/player/playerbase.gd" id="1_b1poq"]
+[ext_resource type="PackedScene" uid="uid://lrhmprblspdt" path="res://scenes/player/redsprite.tscn" id="1_relks"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8f2ys"]
+radius = 6.0
+
+[node name="PlayerBase" type="CharacterBody2D"]
+script = ExtResource("1_b1poq")
+health = 15
+maxHealth = 100
+
+[node name="redsprite" parent="." instance=ExtResource("1_relks")]
+animation = &"idle_front"
+autoplay = "idle_front"
+frame = 0
+frame_progress = 0.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 2)
+shape = SubResource("CircleShape2D_8f2ys")

@@ -1426,6 +1426,4 @@ animations = [{
 
 [node name="redsprite" type="AnimatedSprite2D"]
 sprite_frames = SubResource("SpriteFrames_rfmfo")
-animation = &"idle_backside"
-frame = 3
-frame_progress = 0.325962
+animation = &"brake_back"

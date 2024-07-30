@@ -38,23 +38,39 @@ func handleInputs():
 		velocity.x += 1.0
 		sprite.flip_h = false
 	
-	if Input.is_action_pressed("sprint"):
+	if Input.is_action_just_pressed("sprint"):
 		running = true
-	else:
+		moveSpeed *= 1.5
+	
+	if Input.is_action_just_released("sprint"):
 		running = false
+		moveSpeed /= 1.5
+	
 	
 	velocity = velocity.normalized()
 
 func handleAnimations():
 	if velocity == Vector2.ZERO:
-		animtree ["paramaters/conditions/idle"] = true
-		animtree ["paramaters/conditions/walk"] = false
-		animtree ["paramaters/conditions/run"] = false
-	elif !running:
-		animtree.set("parameters/Idle/blend_position", velocity)
-		animtree.set("paramaters/Walk/blend_position", velocity)
+		animtree["parameters/conditions/idle"] = true;
+		animtree["parameters/conditions/is_moving"] = false;
+		animtree["parameters/conditions/is_running"] = false;
+		
+	elif running:
+		animtree["parameters/conditions/idle"] = false;
+		animtree["parameters/conditions/is_moving"] = false;
+		animtree["parameters/conditions/is_running"] = true;
+		
+		animtree["parameters/Idle/blend_position"] = velocity
 	else:
-		animtree.get("paramaters/playback").travel("Run")
-		animtree.set("parameters/Idle/blend_position", velocity)
-		animtree.set("paramaters/Walk/blend_position", velocity)
-		animtree.set("paramaters/Run/blend_position", velocity)
+		animtree["parameters/conditions/idle"] = false;
+		animtree["parameters/conditions/is_moving"] = true;
+		animtree["parameters/conditions/is_running"] = false;
+		
+		animtree["parameters/Idle/blend_position"] = velocity
+	
+	if Input.is_action_just_pressed("roll"):
+		animtree["parameters/conditions/roll"] = true
+	
+	animtree["parameters/Walk/blend_position"] = velocity
+	animtree["parameters/Run/blend_position"] = velocity
+	animtree["parameters/Roll/blend_position"] = velocity
